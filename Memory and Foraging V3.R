@@ -56,4 +56,6 @@ runSimulation <- function(numForager, numPatch, t, xSize, ySize){
   }
 }
 
-
+PatchCreator <- function(numPatches, xlim, ylim){
+  
+}
