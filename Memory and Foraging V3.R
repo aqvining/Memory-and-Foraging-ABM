@@ -33,3 +33,7 @@ PatchA <- function(xlim, ylim) {                                                
   names(newPatchA@location) <- c('x', 'y')
   newPatchA
 }
+
+PatchCreator <- function(numPatches, xlim, ylim){
+  
+}
