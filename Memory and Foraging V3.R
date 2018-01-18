@@ -18,6 +18,10 @@ PatchA <- function(xlim, ylim) {                                  #constructor f
   ###output: object of class patchA
   ###description: The location slot of output object will have x,y coordinates drawn from a uniform distribution between -xlim and xlim, and -ylim and ylim
   ###             The energy slot of output will have value of 5
+  if(xlim <0 | ylim<0)
+  {
+    stop("must enter a positive value for xlim and ylim")
+  }
   newPatchA <- new("patchA", location = c(runif(1, -xlim, xlim), runif(1, -ylim, ylim)), 
                    energy = 5)
   names(newPatchA@location) <- c('x', 'y')
@@ -57,5 +61,15 @@ runSimulation <- function(numForager, numPatch, t, xSize, ySize){
 }
 
 PatchCreator <- function(numPatches, xlim, ylim){
-  
+  ###input: "xlim" = maximum value for x coordinate of patch
+  ###       "ylim" = maximum value for y coordinate of patch
+  ###       "numPatces" = number of patches that will be created
+  ###output: list of classes of PatchA
+  ###description: The location slots of multiple patches will have x,y coordinates drawn from a uniform distribution between -xlim and xlim, and -ylim and ylim
+  ###             The energy slot of output will have value of 5
+  patches <- vector("list", numPatches)
+  for(i in 1:numPatches){
+    patches[i] <- PatchA(xlim, ylim)
+  }
+  patches
 }
