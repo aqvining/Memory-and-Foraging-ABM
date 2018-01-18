@@ -49,7 +49,11 @@ runSimulation <- function(numForager, numPatch, t, xSize, ySize){
   ###       xlim and ylim are the field size of the x and y coordinates respectively
   ###output: A list of length two. The first element contains a list of foragers for each time step, the second element a list of patches
   ###description: Architecture of simulation. Applies methods to all foragers and patches over a series of time steps
-  
+  foragers <- createObjects(numForager)
+  patches <- createObjects(numPatch)
+  for (x in 1:t) {
+    foragers <- apply(foragers, move)
+  }
 }
 
 
