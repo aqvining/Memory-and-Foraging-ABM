@@ -49,11 +49,21 @@ runSimulation <- function(numForager, numPatch, t, xSize, ySize){
   ###       xlim and ylim are the field size of the x and y coordinates respectively
   ###output: A list of length two. The first element contains a list of foragers for each time step, the second element a list of patches
   ###description: Architecture of simulation. Applies methods to all foragers and patches over a series of time steps
+  data <- list(vector("list", t), vector("list", t))
   foragers <- createObjects(numForager)
   patches <- createObjects(numPatch)
-  for (x in 1:t) {
-    foragers <- apply(foragers, move)
+  data[[1]][[1]] <- foragers
+  data[[2]][[1]] <- patches
+  for (step in 2:t) {
+    foragers <- apply(foragers, move, patches = patches)
+    consumers <- getConsumers(foragers, patches) #gets indices of each forager that is on a patch
+    foragers[consumers] <- apply(foragers[consumers], consume, patches = patches) #updates each forager that extracts resources
+    depleted <- getDepletions(consumers, patches) #gets indices of each patch that was consumed
+    patches[depleted] <- apply(patches[depleted], extraction) #updates each patch that has been consumed (check functionality for multiple consumptions on single patch)
+    data[[1]][[step]] <- foragers
+    data[[2]][[step]] <- patches
   }
+  return(data)
 }
 
 PatchCreator <- function(numPatches, xlim, ylim){
