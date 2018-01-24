@@ -95,3 +95,5 @@ PatchCreator <- function(numPatches, xlim, ylim){
                    names(newForager@memory$yLocation) = 'y'
                    newForager
 }
+
+#Alexander's GitKraken Test
