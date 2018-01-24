@@ -96,4 +96,5 @@ PatchCreator <- function(numPatches, xlim, ylim){
                    newForager
 }
 
-#Alexander's GitKraken Test
+
+#GitKraken Test
