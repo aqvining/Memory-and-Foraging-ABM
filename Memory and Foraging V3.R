@@ -1,11 +1,12 @@
-###~~~Memory and Foraging Agent Based Model Version 3~~~###
-#The goal of this agent based model is to allow flexible and efficient exploration of the impact of spatial memory an animal foraging.
-#It will allow for manipulation of memory size, accuracy, and properties such as learning or forgetting rules.
-#The model will incorporate aspects of optiomal foraging theory into the animal behavior, and additional allow for different
-#navigational decision strategies. The model will then measure overall foraging efficiency given the different memory and
-#navigation properties.
+setClass("foragerA", slots = list(location = "numeric", memory = "data.frame", optForageThresh = "numeric")) #simplified
 
-##Version 3.01 Notes:
+ForagerA<- function(location = c(runif(1,0, 10),runif(1,0, 10)),   
+	               memory = data.frame(patchName = "grass", xLocation = runif(1,0,10), yLocation = runif(1,0,10), 
+	               	                   resourceValAtDeparture = 3, timeSinceLastVisit  = 46, expectedValue = 87
+	               	                   ), 
+	               optForageThresh = 0 #I changed this to 0 (a naive forager should eat any food available, not knowing if it will find any more)
+	               #instead of set values (0,10) can you have this take input xlim and ylim, then draw from -xlim to xlim (and same for y)
+	               #instead of assigning values to this dataframe, please make it an empty structure
 
 #~~ 1. Setup ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -68,4 +69,15 @@ runSimulation <- function(numForager, numPatch, t, xSize, ySize){
 
 PatchCreator <- function(numPatches, xlim, ylim){
   
+}
+
+	               ) 
+{
+                   if(!length(location) == 2) stop ("location must be length 2") #good checks, thanks
+                   if(!ncol(memory) == 6) stop ("memory should be a data frame with 6 columns")
+                   newForager <- new("Forager", location = location, memory = memory, optForageThresh = optForageThresh)
+                   names(newForager@location) <- c('x', 'y')
+                   names(newForager@memory$xLocation) = 'x'
+                   names(newForager@memory$yLocation) = 'y'
+                   newForager
 }
