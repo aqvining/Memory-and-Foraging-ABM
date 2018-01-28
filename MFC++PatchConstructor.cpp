@@ -19,19 +19,19 @@ class Patch {
       public: 
     	//constructor -> should define outside of function as Patch::Patch() and put prototype here. 
         Patch(double xLim = 0.0 , double yLim =10.0, int Energy= 5){
-            assert(xLim < 0.0 || yLim < 0.0); // do checks real quick -> if want to be exactly as R code just need if() statement with cout
+            assert(xLim < 0.0 && yLim < 0.0); // do checks real quick -> if want to be exactly as R code just need if() statement with cout
             location[0] = genRandUnifNum(-1 * xLim, xLim); //use subscripts to assign each location to the array
-            location[1] = genRandUnifNum(-1 * yLim,ylim); //idk about how you "name" an array (what the equivalent of what we think is an R vector) in c++, you just
+            location[1] = genRandUnifNum(-1 * yLim,yLim); //idk about how you "name" an array (what the equivalent of what we think is an R vector) in c++, you just
             setEnergy(Energy);
             cout << "You just created a patch with location: ("<< location[0]<<","<<location[1]<<") and with energy "<< getEnergy();
-            cout<< "\n";
+            cout<< "\n";	
         }
         //getters and setters
 
         //setter methods: let u set the values of the data members
-        void setLocation(double* Location){
-           
-           location = Location;
+        void setLocation(double Location[2]){
+             location[0] = Location[0];
+             location[1] = Location[1];
              // have to use subscripting. 
         }
         void setEnergy(int Energy){
@@ -44,18 +44,21 @@ class Patch {
         int getEnergy(){
          	return energy;
         }
-        virtual ~Patch(){} //deconstructor, I don't think we need to really elaborate this guy b/c it just deallocates
+        //deconstructor, I don't think we need to really elaborate this guy b/c it just deallocates
          	              // all memory allocated by the constructor. 	
+        ~Patch(){
+        	cout<< "Patch destroyed :D\n";
+        } 
 };
    // end a class definition with a semicolon
   
 
 int main(){
-    Patch patchA(0.0,10); // instantiate a Patch using constructor -> can pass energy, xlim and ylim as arguments. 
+    Patch patchA(); // instantiate a Patch using constructor -> can pass energy, xlim and ylim as arguments. 
     return 0;
 }  //I'll probably move this main function to another file soon and create header files and stuff
 
-//this function tries to randomly generate numbers on the uniform distribution but I think it doesn't work
+//this function tries to randomly generate numbers on the uniform distribution 
 double genRandUnifNum(double a = 0.0, double b = 10.0){
 	// random_device rd;  //Will be used to obtain a seed for the random number engine -> CYRUS NOTE: this is actually PSEUDO-random, not random,
  //    		           // I need to find a way to seed it with the current time so it is truly random. 
