@@ -68,9 +68,6 @@ double genRandUnifNum(double a = 0.0, double b = 10.0){
  //                                                           // function only accepts doubles as arguments and outputs doubles too. 
  //    xlim = dis(gen); // idk what gen or dis does lmao
  //    ylim = dis(gen);
-
-
-
 	// lol I chose to abandon the above code for basic C functions srand() and rand() to generate random (I think uniform) numbers 
 	   srand(time(0)); // initialize random seed, this might need to belong in the main function or global IDK
 	   //normally we wouldn't do so much with this next line, but we trying to randomly generate doubles, not ints. 
