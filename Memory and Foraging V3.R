@@ -4,7 +4,7 @@ ForagerA<- function(location = c(runif(1,0, 10),runif(1,0, 10)),
 	               memory = data.frame(patchName = "grass", xLocation = runif(1,0,10), yLocation = runif(1,0,10), 
 	               	                   resourceValAtDeparture = 3, timeSinceLastVisit  = 46, expectedValue = 87
 	               	                   ), 
-	               optForageThresh = 0 #I changed this to 0 (a naive forager should eat any food available, not knowing if it will find any more)
+	               optForageThresh = 0) #I changed this to 0 (a naive forager should eat any food available, not knowing if it will find any more)
 	               #instead of set values (0,10) can you have this take input xlim and ylim, then draw from -xlim to xlim (and same for y)
 	               #instead of assigning values to this dataframe, please make it an empty structure
 
@@ -79,14 +79,15 @@ runSimulation <- function(numForager, numPatch, t, xSize, ySize){
   data <- list(vector("list", t), vector("list", t))
   foragers <- createObjects(numForager)
   patches <- createObjects(numPatch)
+  patchLocations <- lapply(patches, function(X) X@location)
   data[[1]][[1]] <- foragers
   data[[2]][[1]] <- patches
   for (step in 2:t) {
-    foragers <- apply(foragers, move, patches = patches)
+    foragers <- lapply(foragers, move, patches = patches)
     consumers <- getConsumers(foragers, patches) #gets indices of each forager that is on a patch
-    foragers[consumers] <- apply(foragers[consumers], consume, patches = patches) #updates each forager that extracts resources
+    foragers[consumers] <- lapply(foragers[consumers], consume, patches = patches) #updates each forager that extracts resources
     depleted <- getDepletions(consumers, patches) #gets indices of each patch that was consumed
-    patches[depleted] <- apply(patches[depleted], extraction) #updates each patch that has been consumed (check functionality for multiple consumptions on single patch)
+    patches[depleted] <- lapply(patches[depleted], extraction) #updates each patch that has been consumed (check functionality for multiple consumptions on single patch)
     data[[1]][[step]] <- foragers
     data[[2]][[step]] <- patches
   }
@@ -107,7 +108,6 @@ PatchCreator <- function(numPatches, xlim, ylim){
   patches
 }
 
-	               ) 
 {
                    if(!length(location) == 2) stop ("location must be length 2") #good checks, thanks
                    if(!ncol(memory) == 6) stop ("memory should be a data frame with 6 columns")
