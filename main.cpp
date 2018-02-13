@@ -7,12 +7,35 @@
 using namespace std;
 
 double genRandUnifNum(double a, double b); // function prototype
+void truncateCoords(Patch patch);
+int main(int argc, char* argv[]){ // consider having command line arguments -> argc, argv*[]
+      Patch* patchArray = new[argc-1] Patch; //create the number of patches typed on the command line 
+      for(int i = 1; i < argc; i++){ //skip first argument b/c it's the executable name
+         patchArray[i] = Patch(argv*[i]); // i doubt this works but the idea is to create in this array of patches a patch object with the name entered on the command line
+      }
+// map containing all patches mapped to a key for patch number
+      map PatchList<string, Patch> x = {{"1", Patch Patch("PatchA")}, {"2", Patch Patch("PatchB")}, 
+                                   {"3", Patch Patch("PatchC")}, {"4", Patch Patch("Patch D")}};
+    cout<<"Successfully randomly generated patchs\n";
+    for(int patchNum = 0; patchNum < patchArray.size(); patchNum++){
+       truncateCoords(patchArray[patchNum]);  
+    }
+    
+    for(int j = 0; j < patchArray.size(); j++){
+       if(patchArray[j].location[0] > 0 && patchArray[j].location[0] <= 10){
+          if(patchArray[j].location[1] > 0 && patchArray[j].location[1] <=10 )
+          Patch['1'] = patchArray[j]; // if patch btw (0,0) and (0,10) then put in patch 1
+       } //etc 
+       else if()
+         
+    }
+   
 
-int main(){
     Patch PatchA(); // instantiate a Patch using constructor -> can pass energy, xlim and ylim as arguments. 
     Forager ForagerA();
+
     return 0;
-}  //I'll probably move this main function to another file soon and create header files and stuff
+} //I'll probably move this main function to another file soon and create header files and stuff
 
 //this function tries to randomly generate numbers on the uniform distribution 
 double genRandUnifNum(double a = 0.0, double b = 10.0){
@@ -21,6 +44,51 @@ double genRandUnifNum(double a = 0.0, double b = 10.0){
        double randNum = a + static_cast <double> (rand()) / (static_cast <double> (RAND_MAX/(a-b)));
        return randNum;
 }
+void truncateCoords(Patch patch){
+  patch.location[0] = static_cast<int> patch.location[0];
+  patch.location[1] = static_cast<int> patch.location[1];
+}
+
+
+
+
+
+
+ /* 
+  modify main function so you can put user input for number of functions and create patchList array with all those patches in it
+  create a map (python dictionary), patchFinder(), that tells you grid cell (1,1) or something points to patchList[1,2,5]
+  and 1,2; points to [0,3]
+
+and function attached to map that takes location, truncates it, and returns what its mapped to. 
+
+ */
+
+//*************************************Wesley's idea:
+//use JSON for key value pairs and do some importing stuff where u import the JSON file into C++. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Alex's code
@@ -48,5 +116,5 @@ runSimulation <- function(numForager, numPatch, t, xSize, ySize){
     data[[2]][[step]] <- patches
   }
   return(data)
-}
+} 
 */
