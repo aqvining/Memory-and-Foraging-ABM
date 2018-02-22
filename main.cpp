@@ -6,6 +6,7 @@
 //#include "Forager.h"	
 using namespace std;
 
+//http://java2s.com/Tutorial/Cpp/0180__Class/Anarrayofpointerstoobjects.htm
 /* Alex's desired thoughts and notes for 2/14/18
 
 numRows x numCols Patch matrix -> you need to define some kind of double patch pointer
